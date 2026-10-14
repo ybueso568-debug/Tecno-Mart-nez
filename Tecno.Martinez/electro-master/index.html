@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecno Martínez | Tienda de Tecnología</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f5f5;color:#111}
+header{background:#111;color:white;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px}
+.logo{font-size:26px;font-weight:bold;color:#e60012}
+.logo span{color:white}
+.contact{font-size:14px}
+.search{display:flex;width:280px;max-width:100%}
+.search input{width:100%;padding:10px;border:none}
+.search button, .cart-button{background:#e60012;color:white;border:none;padding:10px 15px;cursor:pointer}
+nav{background:#e60012;padding:13px 5%;text-align:center}
+nav a{color:white;text-decoration:none;margin:0 10px;font-weight:bold}
+.hero{background:#111;color:white;padding:50px 5%;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.hero-text{max-width:550px}
+.hero h1{font-size:45px;margin-bottom:15px}
+.hero h1 span{color:#e60012}
+.hero p{font-size:18px;line-height:1.6;margin-bottom:20px}
+.hero-button{background:#e60012;color:white;padding:13px 25px;border:none;border-radius:5px;cursor:pointer}
+.hero-image-box{width:400px;height:250px;background:#222;overflow:hidden;border-radius:10px}
+.hero-image-box img{width:100%;height:100%;object-fit:cover}
+.section{padding:45px 5%}
+.section-title{text-align:center;font-size:30px;margin-bottom:30px}
+.video-section{padding:45px 5%;background:white;text-align:center}
+.video-description{margin-bottom:25px;color:#555}
+.video-container{max-width:900px;margin:auto;padding:8px;background:#111;border:2px solid #e60012;border-radius:12px;overflow:hidden}
+.video-container video{display:block;width:100%;max-height:500px;background:#000}
+.categories,.products{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.category{background:white;padding:20px;text-align:center;border-radius:10px;box-shadow:0 3px 10px #0002}
+.category-image{width:100%;height:140px;background:#eee;overflow:hidden;margin-bottom:10px;border-radius:8px}
+.category-image img{width:100%;height:100%;object-fit:cover}
+.product{background:white;border-radius:10px;overflow:hidden;box-shadow:0 3px 12px #0002;transition:.3s}
+.product:hover{transform:translateY(-5px)}
+.product-image{height:220px;background:#eee;overflow:hidden}
+.product-image img{width:100%;height:100%;object-fit:contain}
+.product-info{padding:15px}
+.badge{background:#e60012;color:white;padding:5px 8px;border-radius:4px;font-size:12px;display:inline-block;margin-bottom:8px}
+.product h3{margin-bottom:8px}
+.rating{color:#e60012;margin-bottom:10px}
+.price{font-size:20px;font-weight:bold}
+.old-price{text-decoration:line-through;color:#888;margin-left:8px;font-size:14px}
+.add-cart{width:100%;margin-top:12px;background:#111;color:white;border:none;padding:10px;cursor:pointer;border-radius:5px}
+.add-cart:hover,.checkout:hover{background:#e60012}
+.offers{background:#111;color:white;padding:45px 5%;text-align:center}
+.offers h2{color:#e60012;margin-bottom:10px}
+.newsletter{padding:40px 5%;text-align:center;background:white}
+.newsletter input{padding:12px;width:300px;max-width:80%;border:1px solid #ccc;margin-top:20px}
+.newsletter button{padding:12px 20px;background:#e60012;color:white;border:none;cursor:pointer}
+footer{background:#111;color:white;text-align:center;padding:25px;line-height:1.8}
+footer h3{color:#e60012}
+.cart{position:fixed;right:-400px;top:0;width:350px;max-width:90%;height:100%;background:white;z-index:1000;box-shadow:-5px 0 15px #0003;padding:20px;transition:.3s;overflow-y:auto}
+.cart.active{right:0}
+.cart-header{display:flex;justify-content:space-between;margin-bottom:20px}
+.close-cart{background:#e60012;color:white;border:none;padding:7px 10px;cursor:pointer}
+.cart-item{border-bottom:1px solid #ddd;padding:10px 0}
+.remove{background:#e60012;color:white;border:none;padding:5px;margin-top:5px;cursor:pointer}
+.checkout{width:100%;background:#111;color:white;padding:12px;border:none;margin-top:20px;cursor:pointer}
+.no-results{display:none;text-align:center;padding:20px;grid-column:1/-1}
+@media(max-width:1000px){.products,.categories{grid-template-columns:repeat(2,1fr)}.hero{flex-direction:column;text-align:center}.hero-image-box{width:100%;max-width:600px}}
+@media(max-width:650px){header{justify-content:center;text-align:center}.search{width:100%}.hero h1{font-size:32px}.products,.categories{grid-template-columns:1fr}.hero-image-box{height:210px}.video-section{padding:30px 4%}nav a{display:inline-block;margin:6px}.newsletter input{width:80%;margin-bottom:10px}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">TM <span>Tecno Martínez</span></div>
+<div class="contact">+504 96221275 | ybueso568@gmail.com</div>
+<div class="search"><input type="text" id="searchInput" placeholder="Buscar producto..." oninput="searchProducts()"><button onclick="searchProducts()">Buscar</button></div>
+<button class="cart-button" onclick="openCart()">Carrito (<span id="cartCount">0</span>)</button>
+</header>
+<nav>
+<a href="#inicio">Inicio</a><a href="#video">Video</a><a href="#categorias">Categorías</a><a href="#productos">Productos</a><a href="#ofertas">Ofertas</a><a href="#contacto">Contacto</a>
+</nav>
+<section class="hero" id="inicio">
+<div class="hero-text"><h1>Tecnología para <span>todos</span></h1><p>Encuentra laptops, celulares, cámaras, audífonos, tablets y muchos productos tecnológicos a excelentes precios.</p><button class="hero-button" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Ver productos</button></div>
+<div class="hero-image-box"><img src="baner.jpeg" alt="Banner Tecno Martínez"></div>
+</section>
+<section class="video-section" id="video">
+<h2 class="section-title">Conoce Tecno Martínez</h2>
+<p class="video-description">Descubre nuestros productos y novedades tecnológicas.</p>
+<div class="video-container"><video controls autoplay muted loop playsinline preload="metadata"><source src="video1.mp4" type="video/mp4">Tu navegador no puede reproducir este video.</video></div>
+</section>
+<section class="section" id="categorias">
+<h2 class="section-title">Categorías</h2>
+<div class="categories">
+<div class="category"><div class="category-image"><img src="laptops.jpeg" alt="Laptops"></div><h3>Laptops</h3></div>
+<div class="category"><div class="category-image"><img src="relojs.jpeg" alt="Smartphones"></div><h3>Smartphones</h3></div>
+<div class="category"><div class="category-image"><img src="camaras.jpeg" alt="Cámaras"></div><h3>Cámaras</h3></div>
+<div class="category"><div class="category-image"><img src="accesorios.jpeg" alt="Accesorios"></div><h3>Accesorios</h3></div>
+</div>
+</section>
+<section class="section" id="productos">
+<h2 class="section-title">Nuestros productos</h2>
+<div class="products">
+<div class="product" data-name="laptop lenovo"><div class="product-image"><img src="LAPTOP.jpeg" alt="Laptop Lenovo"></div><div class="product-info"><span class="badge">OFERTA</span><h3>Laptop Lenovo</h3><div class="rating">★★★★★</div><div class="price">L 18,500 <span class="old-price">L 21,000</span></div><button class="add-cart" onclick="addToCart('Laptop Lenovo',18500)">Agregar al carrito</button></div></div>
+<div class="product" data-name="iphone apple celular"><div class="product-image"><img src="IPHONE.jpeg" alt="iPhone"></div><div class="product-info"><span class="badge">NUEVO</span><h3>iPhone</h3><div class="rating">★★★★★</div><div class="price">L 24,900</div><button class="add-cart" onclick="addToCart('iPhone',24900)">Agregar al carrito</button></div></div>
+<div class="product" data-name="samsung galaxy celular"><div class="product-image"><img src="GALAXY.jpeg" alt="Samsung Galaxy"></div><div class="product-info"><h3>Samsung Galaxy</h3><div class="rating">★★★★★</div><div class="price">L 12,500</div><button class="add-cart" onclick="addToCart('Samsung Galaxy',12500)">Agregar al carrito</button></div></div>
+<div class="product" data-name="camara canon fotografia"><div class="product-image"><img src="CANON.jpeg" alt="Cámara Canon"></div><div class="product-info"><span class="badge">OFERTA</span><h3>Cámara Canon</h3><div class="rating">★★★★☆</div><div class="price">L 15,800 <span class="old-price">L 18,000</span></div><button class="add-cart" onclick="addToCart('Cámara Canon',15800)">Agregar al carrito</button></div></div>
+<div class="product" data-name="audifonos bluetooth"><div class="product-image"><img src="AUDIFONOS.JPEG" alt="Audífonos Bluetooth"></div><div class="product-info"><span class="badge">NUEVO</span><h3>Audífonos Bluetooth</h3><div class="rating">★★★★★</div><div class="price">L 1,250</div><button class="add-cart" onclick="addToCart('Audífonos Bluetooth',1250)">Agregar al carrito</button></div></div>
+<div class="product" data-name="smartwatch reloj"><div class="product-image"><img src="RELOJ.jpeg" alt="Smartwatch"></div><div class="product-info"><h3>Smartwatch</h3><div class="rating">★★★★☆</div><div class="price">L 2,500</div><button class="add-cart" onclick="addToCart('Smartwatch',2500)">Agregar al carrito</button></div></div>
+<div class="product" data-name="tablet"><div class="product-image"><img src="TABLET.jpeg" alt="Tablet"></div><div class="product-info"><h3>Tablet</h3><div class="rating">★★★★★</div><div class="price">L 6,900</div><button class="add-cart" onclick="addToCart('Tablet',6900)">Agregar al carrito</button></div></div>
+<div class="product" data-name="teclado gamer gaming"><div class="product-image"><img src="TECLADO.jpeg" alt="Teclado Gamer"></div><div class="product-info"><span class="badge">OFERTA</span><h3>Teclado Gamer</h3><div class="rating">★★★★★</div><div class="price">L 1,800</div><button class="add-cart" onclick="addToCart('Teclado Gamer',1800)">Agregar al carrito</button></div></div>
+<p class="no-results" id="noResults">No se encontraron productos.</p>
+</div>
+</section>
+<section class="offers" id="ofertas"><h2>Ofertas especiales</h2><p>Aprovecha nuestros precios especiales en productos seleccionados de Tecno Martínez.</p></section>
+<section class="newsletter"><h2>Recibe nuestras novedades</h2><p>Déjanos tu correo para recibir promociones.</p><form id="newsletterForm"><input type="email" id="email" placeholder="Tu correo electrónico" required><button type="submit">Suscribirme</button></form></section>
+<footer id="contacto"><h3>Tecno Martínez</h3><p>Tu tienda de tecnología</p><p>Teléfono: +504 96221275</p><p>Correo: ybueso568@gmail.com</p><p>© 2026 Tecno Martínez. Todos los derechos reservados.</p></footer>
+<div class="cart" id="cart"><div class="cart-header"><h2>Mi carrito</h2><button class="close-cart" onclick="closeCart()">X</button></div><div id="cartItems"><p>Tu carrito está vacío.</p></div><h3>Total: <span id="cartTotal">L 0</span></h3><button class="checkout" onclick="checkout()">Finalizar compra</button></div>
+<script>
+let cart=[];
+function formatPrice(price){return "L "+price.toLocaleString("en-US")}
+function addToCart(name,price){cart.push({name,price});updateCart();alert(name+" fue agregado al carrito.")}
+function updateCart(){
+const items=document.getElementById("cartItems"),count=document.getElementById("cartCount"),totalText=document.getElementById("cartTotal");
+count.textContent=cart.length;
+if(!cart.length){items.innerHTML="<p>Tu carrito está vacío.</p>";totalText.textContent="L 0";return}
+let total=0;items.innerHTML="";
+cart.forEach((item,index)=>{
+total+=item.price;
+const div=document.createElement("div");div.className="cart-item";
+const name=document.createElement("strong");name.textContent=item.name;
+const price=document.createElement("p");price.textContent=formatPrice(item.price);
+const btn=document.createElement("button");btn.className="remove";btn.textContent="Eliminar";btn.onclick=()=>removeItem(index);
+div.append(name,price,btn);items.appendChild(div);
+});
+totalText.textContent=formatPrice(total);
+}
+function removeItem(index){cart.splice(index,1);updateCart()}
+function openCart(){document.getElementById("cart").classList.add("active")}
+function closeCart(){document.getElementById("cart").classList.remove("active")}
+function searchProducts(){
+const term=document.getElementById("searchInput").value.trim().toLowerCase();let found=0;
+document.querySelectorAll(".product").forEach(product=>{
+const name=product.dataset.name.toLowerCase(),title=product.querySelector("h3").textContent.toLowerCase();
+const match=name.includes(term)||title.includes(term);
+product.style.display=match?"":"none";if(match)found++;
+});
+document.getElementById("noResults").style.display=found===0?"block":"none";
+}
+document.getElementById("newsletterForm").addEventListener("submit",function(e){e.preventDefault();alert("¡Gracias por tu interés en Tecno Martínez!");this.reset()});
+function checkout(){
+if(!cart.length){alert("Tu carrito está vacío.");return}
+let total=0,details="";
+cart.forEach(item=>{total+=item.price;details+=item.name+" - "+formatPrice(item.price)+"\n"});
+alert("Resumen de tu compra:\n\n"+details+"\nTotal: "+formatPrice(total)+"\n\nGracias por comprar en Tecno Martínez.");
+}
+</script>
+</body>
+</html>
